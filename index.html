@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Новости</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+@media (max-width: px) {
+    .menu-btn {
+        display: block; 
+    }
+
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 250px;
+        background-color: #111;
+        flex-direction: column;
+        align-items: flex-start;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .navbar.open {
+        transform: translateX(0);
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar a {
+        color: white;
+        padding: 10px 15px;
+        width: 100%;
+        display: block;
+    }
+
+    .navbar a:hover {
+        background-color: #575757;
+    }
+
+    .dropdown-content {
+        position: static;
+        box-shadow: none;
+        background-color: #222;
+    }
+
+    .dropdown-content a {
+        color: white;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #444;
+    }
+}
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+@media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.2rem;
+            }
+        }
+.dropbtn {
+    background-color: transparent;
+    color: white;
+    padding: 7px;
+    font-size: 16px;
+    border: none;
+}
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+
+.dropdown-content {
+    margin-right: 20px;
+    width: 160px;
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+.dropdown:hover .dropbtn {}
+
+.sidenav {
+    height: 100%;
+    /* 100% Полный рост */
+    width: 0;
+    /* 0 ширина - измените это с помощью JavaScript */
+    position: fixed;
+    /* Оставаться на месте */
+    z-index: 1;
+    /* Оставайтесь на вершине */
+    top: 0;
+    /* Оставайтесь на вершине */
+    left: 0;
+    background-color: #111;
+    /* Черный */
+    overflow-x: hidden;
+    /* Отключить горизонтальную прокрутку */
+    padding-top: 60px;
+    /* Поместите содержимое 60px сверху */
+    transition: 0.5s;
+    /* 0.5 секунд эффект перехода, чтобы скользить в sidenav */
+}
+
+/* Ссылки в меню навигации */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+/* При наведении курсора мыши на навигационные ссылки измените их цвет */
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+/* Положение и стиль кнопки закрытия (верхний правый угол) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* Стиль содержимого страницы - используйте это, если вы хотите переместить содержимое страницы вправо при открытии боковой навигации */
+#main {
+    transition: margin-left .5s;
+    padding: 20px;
+}
+
+/* На небольших экранах, где высота меньше 450px, измените стиль sidenav (меньше отступов и меньший размер шрифта) */
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+#main {
+    transition: margin-left 0.5s;
+}
+.ptk {
+    width: 120px;
+    height: 30px;
+    margin-right: 1600px;
+    margin-bottom: 20px;
+
+
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+/* Header Styles */
+header {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+header h1 {
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Main Content */
+main {
+    margin-top: 20px;
+}
+
+.top-news {
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.top-news article {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 800px;
+}
+
+.top-news img {
+    width: 200px;
+    max-width: 100%;
+    border-radius: 8px;
+}
+.recommended{
+    margin-top: 50px;
+}
+.recommended-grid{
+    margin: 50px;
+}
+
+.latest-news h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.news-categories{
+    margin-top: 50px;
+}
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.news-grid article {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.news-grid img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 10px;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+.newsletter{
+    margin-top: 50px;
+}
+#ars{
+    margin-top: 50px;
+}
+footer {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    margin-top: 40px;
+    text-align: center;
+}
+
+footer nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin-top: 10px;
+}
+
+footer nav ul li {
+    margin: 0 15px;
+}
+
+footer nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer nav ul li a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/
+.popular-videos {
+    margin-top: 100px;
+    padding: 40px 0;
+    background-color: #f0f0f0;
+    text-align: center;
+}
+
+.videos-grid {
+    margin-top: 50px;
+    margin-left: 350px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.videos-grid video {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+
+.news-categories {
+    padding: 40px 0;
+    background-color: #e0e0e0;
+    text-align: center;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.category {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category h3 {
+    margin-bottom: 10px;
+}
+
+.politics {
+    background-color: #ffebcd;
+}
+
+.economy {
+    background-color: #e6e6fa;
+}
+
+.tech {
+    background-color: #d3ffd3;
+}
+
+.sports {
+    background-color:
+}
+
+.loading-bars {
+    width: 80%;
+}
+
+.bar-container {
+    width: 100%;
+    height: 20px;
+    margin: 10px 0;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.bar {
+    height: 100%;
+    border-radius: 10px;
+    animation: load 3s ease-in-out infinite;
+}
+
+.blue {
+    background-color: #007bff;
+    animation-delay: 0s;
+}
+
+.green {
+    background-color: #28a745;
+    animation-delay: 0.5s;
+}
+
+.light-blue {
+    background-color: #17a2b8;
+    animation-delay: 1s;
+}
+
+.yellow {
+    background-color: #ffc107;
+    animation-delay: 1.5s;
+}
+
+.red {
+    background-color: #dc3545;
+    animation-delay: 2s;
+}
+
+@keyframes load {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+       
+
+         @keyframes loading {
+            from {
+                width: 0%;
+            }
+            to {
+                width: 100%;
+            }
+        }
+         .share-button {
+            margin-top: 600px;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #f20a44;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgb(255, 130, 240);
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 10px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .share-menu {
+            margin-top: 600px;
+            margin-left: 80%;
+            flex-direction: column;
+            top: 60px;
+            position: fixed;
+            height: 200px;
+            width: 300px;
+            bottom: 50px;
+            left: 0;
+            background: rgb(255, 149, 149);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            display: none;
+            z-index: 10;
+        }
+
+        .share-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .share-menu ul li {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .share-menu ul li:last-child {
+            border-bottom: none;
+        }
+
+        .share-menu ul li:hover {
+            background-color: #f0f0f0;
+        }
+
+        .share-menu ul li .icon {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-size: 16px;
+            color: white;
+        }
+
+
+        .icon.instagram {
+            background-color: #e4405f;
+        }
+
+        .icon.telegram {
+            background-color: #0088cc;
+        }
+
+        .icon.facebook {
+            background-color: #4267B2;
+        }
+
+        .text-with-arrow{
+         font-family: Arial, sans-serif;
+            display: inline-flex;
+            align-items: center;
+        }
+        .arrow {
+            margin-left: px;
+        } 
+        
+        .share-container {
+            position: relative;
+            
+        }
+        .share-button {
+          
+            width: 50px;
+            height: 50px;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .share-menu {
+            position: absolute;
+            bottom: 60px;
+            left: 0;
+            display: none;
+            flex-direction: column;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .share-menu.active {
+            display: flex;
+        }
+        .share-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .share-menu a:hover {
+            background-color: #f0f0f0;
+        }
+        .share-menu a i {
+            font-size: 18px;
+        }
+    
+           .r1{
+            margin-top: 500px;
+           }
+           .er{
+            width: 20px;
+            padding: 10px 20px;
+           }
+           .ptk{
+            float: left;
+            display: inline-block;
+            padding: 10PX;
+            margin-right: 10px;
+            text-align: center;
+            font-size: larger;
+            color: black;
+            border-radius: 100%;
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            float: top;
+           }
+           .navbar{
+            text-align: center; 
+           }
+           .www{
+            list-style: none; /* Убираем маркеры */
+            padding: 0; /* Убираем отступы внутри списка */
+            margin: 0; /* Убираем внешние отступы */
+            display: flex; /* Располагаем элементы в строку */
+            justify-content: center; /* Центрируем список */
+        }
+           .www li{
+            margin: 0 15px;
+           }
+           .www li a{
+            text-decoration: none; /* Убираем подчеркивание ссылок */
+            color: white; /* Цвет текста */
+            font-size: 18px; /* Размер шрифта */
+            transition: color 0.3s;
+           }
+        .img{
+             position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    opacity: 0.5;
+
+        }
+        .img:hover{
+            opacity: 1;
+            transform: scale(1.05);
+        
+        }
+        .ptk{
+            float: left;
+            margin-left: -200px;
+        }
+        .dropbtn{
+            padding-bottom: 20px;
+        }
+    .logo{
+        margin-top: 10px;
+    }
+    .dropbtn{
+        text-decoration: none;
+    }
+     .ad-block {
+            position: relative;
+            border: 2px dashed #ccc;
+            padding: 10px;
+            margin: 20px 0;
+            text-align: center;
+            background-color: #f9f9f9;
+            max-width: 300px;
+            margin: auto;
+            margin-top: 20px;
+        }
+        .ad-block img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .close-btn:hover {
+            background: #cc0000;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="container">
+        <div class="header-top">
+            <h1>Новости Казахстана и Мира</h1>
+            <center>
+                <img src="download.png" alt="Логотип" class="logo">
+            </center>
+        </div>
+
+        <nav class="navbar">
+            <button onclick="openNav()" class="ptk">☰</button>
+            <div id="overlay" onclick="closeNav()"></div>
+            <ul class="www">
+                <li><a href="index.html">Главная</a></li>
+                <li class="dropdown">
+                    <button class="dropbtn">Услуги <span class="arrow">▼</span></button>
+                    <div class="dropdown-content">
+                        <a href="https://www.instagram.com/beiskkali/profilecard/?igsh=cjd1NnNxNjFic2F0">Instagram</a>
+                        <a href="#">Facebook</a>
+                        <a href="#">VK</a>
+                    </div>
+                </li>
+                <li><a href="#">Документы</a></li>
+                <li><a href="#">Конфиденциальность</a></li>
+                <li><a href="#">Контакты</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Боковое меню -->
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#">О нас</a>
+    <a href="#">Наша редакция</a>
+    <a href="#">Вакансий</a>
+    <hr>
+    <div class="dropdown">
+        <center><button class="dropbtn">
+            Наши другие сайты <span class="arrow">▼</span>
+        </button></center>
+        <div class="dropdown-content">
+            <a href="health.html">Здоровье</a>
+            <a href="#">Новости</a>
+        </div>
+    </div>
+    
+    <a href="#" class="r1">Напишите о нас</a>
+    <script src="sciript.js"></script>
+</div>
+
+<script>
+
+    function toggleMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("open");
+    }
+</script>
+    <main>
+        <section class="top-news">
+            <article>
+                <img src="Str1.jpg" alt="Топ новость">
+                <h2>Главная новость дня</h2>
+                <p>Подробности жестокого дела в Талгаре</p>
+                <a href="#" class="read-more">Читать далее</a>
+            </article>
+        </section>
+
+        
+        
+
+        <section class="latest-news">
+            <h2>Последние новости</h2>
+            <div class="news-grid">
+                <article>
+                    <img src="Str2.jpg" alt="Новость 1">
+                    <h3>Гражданство Казахстана</h3>
+                    <p>В Казахстане установили требования к знанию государственного языка для получения гражданства.</p>
+                    <a href="#" class="read-more">Читать далее</a>
+                </article>
+                <article>
+                    <img src="Str3.jpg" alt="Новость 2">
+                    <h3>Спорт</h3>
+                    <p>Казахстан уступил Словении в матче Лиги наций по футболу
+                    
+                    </p>
+                    <a href="#" class="read-more">Читать далее</a>
+                </article>
+                <article>
+                    <img src="Str4.jpg" alt="Новость 3">
+                    <h3>В Казахстане в 2026 году проведут «Игры будущего»
+                    </h3>
+                    <p>На проведение турнира также претендовали Перу и Чили
+                    
+                    
+                    </p>
+                    <a href="#" class="read-more">Читать далее</a>
+                </article>
+                
+            </div>
+        </section>
+
+        <div class="ad-block" id="ad-block">
+            <button class="close-btn" onclick="hideAd()">×</button>
+            <p>Реклама</p>
+            <img src="download-4.jpg" alt="Реклама" />
+            <p>Есть проблемы с законом? <a href="advokat.html">Есть решение!</a></p>
+        </div>
+        
+        <script>
+            function hideAd() {
+                const adBlock = document.getElementById('ad-block');
+                adBlock.style.display = 'none';
+            }
+        </script>
+       
+
+     
+        <section class="recommended">
+            <h2 align="center">Рекомендуем к прочтению</h2>
+            <div class="recommended-grid">
+                <article>
+                    <center><img src="download.jpg" alt="Рекомендованная новость 1" width="200px">
+                    <h3>Всемирный день стандартизации отмечают на севере Казахстана
+                    
+                    </h3>
+                    <p>14 октября отмечается Всемирный день стандартизации, который был учреждён в 1970 году по инициативе президента ISO
+                    Фарука Сунтера.
+                    
+                    </p>
+                    <a href="#" class="read-more">Читать далее</a></center>
+                </article>
+                <article id="ars">
+                    <center><img src="Str5.jpg" alt="Рекомендованная новость 2" width="200px">
+                    <h3>Казахстан задолжал другим странам более $166 млрд</h3>
+                    <p>За пять лет внешний долг Казахстана перед ОАЭ вырос почти в два раза, передает LS.</p>
+                    <a href="#" class="read-more">Читать далее</a></center>
+                </article>
+            </div>
+        </section>
+        
+        </div>
+        <button class="share-button" id="shareButton">➤</button>
+        <div class="share-menu" id="shareMenu">
+            <a href="#"><i>📘</i> Facebook</a>
+            <a href="#"><i>🐦</i> Twitter</a>
+            <a href="#"><i>🔗</i> LinkedIn</a>
+            <a href="#"><i>➕</i> Google+</a>
+        </div>
+        </div>
+        
+        <script>
+            const shareButton = document.getElementById('shareButton');
+            const shareMenu = document.getElementById('shareMenu');
+
+            shareButton.addEventListener('click', () => {
+                shareMenu.classList.toggle('active');
+            });
+
+           
+            document.addEventListener('click', (e) => {
+                if (!shareButton.contains(e.target) && !shareMenu.contains(e.target)) {
+                    shareMenu.classList.remove('active');
+                }
+            });
+            changeMenuWidth(400);
+        </script>
+        <script>
+
+            document.addEventListener('click', () => {
+                menu.classList.remove('active');
+                shareMenu.classList.remove('active');
+            });
+
+        </script>
+
+
+        
+       
+
+        
+        <section class="news-categories">
+            <h2>Новости мира</h2>
+            <div class="category-grid">
+                <div class="category politics">
+                    <h3>Политика</h3>
+                    <img src="pol.jpg" alt="" class="img">
+                    <p>Последние новости политики со всего мира.</p>
+                </div>
+                <div class="category economy">
+                    <h3>Экономика</h3>
+                    <img src="eko.jpg" alt="" class="img">
+                    <p>Актуальная информация о глобальной экономике и финансах.</p>
+                </div>
+                <div class="category tech">
+                    <h3>Технологии</h3>
+                    <img src="tex.jpg" alt="" class="img">
+                    <p>Самые свежие новости из мира технологий.</p>
+                </div>
+                <div class="category sports">
+                    <h3>Спорт</h3>
+                    <img src="sport.jpg" alt="" class="img">
+                    <p>Спортивные события и результаты соревнований.</p>
+                </div>
+            </div>
+        </section>
+
+       
+        <section class="newsletter">
+            <center><h2>Подпишитесь на нашу рассылку</h2>
+            <p>Получайте последние новости прямо на вашу почту.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Ваш email">
+                <button type="submit">Подписаться</button>
+            </form></center>
+        </section>
+    </main>
+   
+    <footer>
+        </div>
+        <button class="share-button" id="shareButton">➤</button>
+        <div class="share-menu" id="shareMenu">
+            <a href="#"><i>📘</i> Facebook</a>
+            <a href="#"><i>🐦</i> Twitter</a>
+            <a href="#"><i>🔗</i> LinkedIn</a>
+            <a href="#"><i>➕</i> Google+</a>
+            <script src="sciript.js"></script>
+        </div>
+        </div>
+        <p>Наши контакты: +7 705 198 67 54 <br>
+                           +7 708 345 68 89
+        </p>
+        <p>&copy;Портал новостей "News.kz"</p>
+    </footer>
+</body>
+
+</html>
